@@ -16,14 +16,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository using the configured Git credentials
-
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'main']],
-
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: 'main']], 
-
-                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test3.git', credentialsId: 'Git']]])
+                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test2.git', credentialsId: 'Git']]])
             }
         }
 
@@ -40,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Ensure the JAR file exists before proceeding
-                    if (!fileExists('target/bankapp.jar')) {
+                    if (!fileExists('bankapp.jar')) {
                         error "bankapp.jar not found! Build failed."
                     }
                 }
@@ -60,10 +55,7 @@ pipeline {
             steps {
                 script {
                     // Use the credentials stored in Jenkins for Docker Hub
-
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) { 
                         // Log in to Docker Hub
                         bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
                         // Push the image to Docker Hub
@@ -91,14 +83,14 @@ pipeline {
             }
         }
 
-        stage('Clean up') {
-            steps {
-                script {
-                    // Clean up stopped containers
-                    bat 'docker-compose -f docker-compose.yml down'
-                }
-            }
-        }
+        // stage('Clean up') {
+        //     steps {
+        //         script {
+        //             // Clean up stopped containers
+        //             bat 'docker-compose -f docker-compose.yml down'
+        //         }
+        //     }
+        // }
     }
 
     post {
