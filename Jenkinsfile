@@ -18,7 +18,7 @@ pipeline {
                 // Checkout the code from the repository using the configured Git credentials
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'main']],
-                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test2.git', credentialsId: 'Git']]])
+                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test3.git', credentialsId: 'Git']]])
             }
         }
 
