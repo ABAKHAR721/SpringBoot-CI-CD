@@ -16,13 +16,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository using the configured Git credentials
-<<<<<<< HEAD
+
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'main']],
-=======
+
                 checkout([$class: 'GitSCM', 
                           branches: [[name: 'main']], 
->>>>>>> ade966690fd27cdf76bded2059150f176ddbaa76
+
                           userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test3.git', credentialsId: 'Git']]])
             }
         }
@@ -60,11 +60,10 @@ pipeline {
             steps {
                 script {
                     // Use the credentials stored in Jenkins for Docker Hub
-<<<<<<< HEAD
+
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-=======
+
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) { 
->>>>>>> ade966690fd27cdf76bded2059150f176ddbaa76
                         // Log in to Docker Hub
                         bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
                         // Push the image to Docker Hub
