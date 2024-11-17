@@ -3,6 +3,7 @@ services:
     image: mysql:latest
     container_name: mysqlcontainer
     environment:
+      MYSQL_ROOT_PASSWORD: root 
       MYSQL_DATABASE: db_banque_lsi
     networks:
       - networkmysql
