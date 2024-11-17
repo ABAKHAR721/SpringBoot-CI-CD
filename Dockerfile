@@ -10,8 +10,5 @@ COPY target/bankapp.jar .
 EXPOSE 8080
 
 # Run the application
-<<<<<<< HEAD
+
 ENTRYPOINT ["java", "-jar", "bankapp.jar"]
-=======
-ENTRYPOINT ["java", "-jar", "bankapp.jar"]
->>>>>>> ade966690fd27cdf76bded2059150f176ddbaa76
