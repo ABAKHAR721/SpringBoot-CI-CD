@@ -23,7 +23,7 @@ pipeline {
                 checkout([$class: 'GitSCM', 
                           branches: [[name: 'main']], 
 >>>>>>> ade966690fd27cdf76bded2059150f176ddbaa76
-                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test1.git', credentialsId: 'Git']]])
+                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/test3.git', credentialsId: 'Git']]])
             }
         }
 
