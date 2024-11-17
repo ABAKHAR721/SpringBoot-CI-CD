@@ -11,6 +11,7 @@ services:
       - networkmysql
     ports:
       - "3307:3306"  # Expose MySQL on port 3307 locally
+    restart: always  # Ensures the MySQL container restarts if it stops or crashes
 
   bankapp:
     image: abakhar217/abakhar0:bankapp
@@ -28,8 +29,8 @@ services:
     depends_on:
       - mysql  # Ensure MySQL is started before the bankapp
     command: ["dockerize", "-wait", "tcp://mysqlcontainer:3306", "-timeout", "60s", "java", "-jar", "bankapp.jar"]
+    restart: always  # Ensures the Bank app container restarts if it stops or crashes
 
 networks:
   networkmysql:
     driver: bridge
-
