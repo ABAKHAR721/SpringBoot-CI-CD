@@ -16,11 +16,11 @@ services:
     image: abakhar217/abakhar0:bankapp
     container_name: bankcontainer
     environment:
-      MYSQL_HOST: mysqlcontainer
+      MYSQL_HOST: localhost
       MYSQL_PORT: 3306
       MYSQL_DB_NAME: db_banque_lsi
-      MYSQL_USER: root
-      MYSQL_PASSWORD:""
+      MYSQL_ROOT: root
+      MYSQL_PASSWORD:
     ports:
       - "8090:8080"
     networks:
