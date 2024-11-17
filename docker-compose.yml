@@ -6,7 +6,7 @@ services:
     container_name: mysqlcontainer
     environment:
       MYSQL_DATABASE: db_banque_lsi
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Allow empty password (for local dev purposes)
     networks:
       - networkmysql
     ports:
@@ -16,13 +16,13 @@ services:
     image: abakhar217/abakhar0:bankapp  
     container_name: bankcontainer
     environment:
-      MYSQL_HOST: mysqlcontainer 
+      MYSQL_HOST: mysqlcontainer  # Reference to MySQL container
       MYSQL_PORT: 3306
-      MYSQL_DB_NAME: jdbc:mysqlcontainer://mysqlcontainer:3306/db_banque_lsi
-      MYSQL_ROOT: root  # Root username
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' 
+      MYSQL_DB_NAME: db_banque_lsi  # Just the database name
+      MYSQL_ROOT: root  # Assuming MySQL root is used, even with no password
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Same as above
     ports:
-      - "8090:8080" 
+      - "8090:8080"  # Expose your app on port 8090 locally
     networks:
       - networkmysql
     depends_on:
