@@ -5,8 +5,8 @@ services:
     image: mysql:latest
     container_name: mysqlcontainer
     environment:
-      MYSQL_ROOT_PASSWORD: ""  
       MYSQL_DATABASE: db_banque_lsi
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
       - networkmysql
     ports:
@@ -18,9 +18,9 @@ services:
     environment:
       MYSQL_HOST: mysqlcontainer 
       MYSQL_PORT: 3306
-      MYSQL_DB_NAME: db_banque_lsi
+      MYSQL_DB_NAME: jdbc:mysqlcontainer://mysqlcontainer:3306/db_banque_lsi
       MYSQL_ROOT: root  # Root username
-      MYSQL_PASSWORD: 
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' 
     ports:
       - "8090:8080" 
     networks:
