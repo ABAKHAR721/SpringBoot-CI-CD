@@ -1,29 +1,32 @@
+version: '3.8'
+
 services:
   mysql:
     image: mysql:latest
     container_name: mysqlcontainer
     environment:
-      MYSQL_ROOT_PASSWORD:
+      MYSQL_ROOT_PASSWORD: ""  
       MYSQL_DATABASE: db_banque_lsi
     networks:
       - networkmysql
     ports:
-      - "3307:3306"
+      - "3307:3306"  # Expose MySQL on port 3307 locally
+
   bankapp:
-    image: abakhar217/abakhar0:bankapp
+    image: abakhar217/abakhar0:bankapp  
     container_name: bankcontainer
     environment:
-      MYSQL_HOST: localhost
+      MYSQL_HOST: mysqlcontainer 
       MYSQL_PORT: 3306
       MYSQL_DB_NAME: db_banque_lsi
-      MYSQL_ROOT: root
-      MYSQL_PASSWORD:
+      MYSQL_ROOT: root  # Root username
+      MYSQL_PASSWORD: 
     ports:
-      - "8090:8080"
+      - "8090:8080" 
     networks:
       - networkmysql
     depends_on:
-      - mysql
+      - mysql  # Ensure MySQL is started before the bankapp
 
 networks:
   networkmysql:
