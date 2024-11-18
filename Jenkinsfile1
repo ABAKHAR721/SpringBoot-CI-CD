@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = 'abakhar217/abakhar0:bankapp'
+        IMAGE_NAME = "abakhar217/abakhar0:bankapp-${BUILD_NUMBER}"
         MYSQL_DEPLOYMENT = 'mysql-deployment'
         BANKAPP_DEPLOYMENT = 'bankapp-deployment'
     }
