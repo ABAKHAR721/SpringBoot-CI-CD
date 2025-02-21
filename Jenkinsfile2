@@ -17,7 +17,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'main']],
-                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/SpringBoot-CI-CD.git', credentialsId: 'Git']]])
+                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/SpringBoot-CI-CD.git', credentialsId: 'git']]])
             }
         }
 
