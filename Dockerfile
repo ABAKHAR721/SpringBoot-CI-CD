@@ -4,8 +4,8 @@ FROM openjdk:17-jdk-buster
 WORKDIR /app
 
 # Copy the jar file from the host system to the Docker container
-COPY target/bankapp.jar .
-
+# COPY target/bankapp.jar .
+COPY bankapp.jar .
 # Expose port
 EXPOSE 8080
 
