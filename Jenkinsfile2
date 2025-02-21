@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven_3.9.9'  // Ensure this matches the name of your Maven installation in Jenkins
+        jdk 'JDK_21'
+    }
+
+    environment {
+        IMAGE_NAME = "abakhar217/abakhar0:trivy-test-${BUILD_NUMBER}"
+        MYSQL_DEPLOYMENT = 'trivy-test-deployment'
+        BANKAPP_DEPLOYMENT = 'trivy-test-deployment'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          branches: [[name: 'main']],
+                          userRemoteConfigs: [[url: 'https://github.com/ABAKHAR721/SpringBoot-CI-CD.git', credentialsId: 'Git']]])
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    bat "docker build -t ${IMAGE_NAME} ."
+                }
+            }
+        }
+        
+        stage('Trivy Scan') {
+            steps {
+                script {
+                    // Install Trivy if not already installed
+                    sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh'
+
+                    // Scan Docker image for vulnerabilities (failing build if CRITICAL issues exist)
+                    sh "trivy image --exit-code 1 --severity CRITICAL ${IMAGE_NAME}"
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        // Secure login using password-stdin
+                        bat "echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin"
+
+                        // Push the image to Docker Hub
+                        bat "docker push ${IMAGE_NAME}"
+
+                        // Logout after pushing
+                        bat "docker logout"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up any unused Docker images and containers
+            bat 'docker system prune -f'
+        }
+    }
+}
