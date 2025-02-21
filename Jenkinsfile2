@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "abakhar217/trivy:trivy-test-${BUILD_NUMBER}"
-        TRIVY_PATH = "C:\\Trivy"  // Adjust this to the actual install location
+        CHOCOLATEY_PATH = 'C:\\ProgramData\\chocolatey\\bin' // Default Chocolatey install path
     }
 
     stages {
@@ -31,7 +31,8 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 script {
-                    //  Assume Trivy is already installed at TRIVY_PATH and in PATH
+                    // Install Trivy using Chocolatey
+                    bat "${CHOCOLATEY_PATH}\\choco install trivy -y"  // -y answers "yes" to all prompts
                     bat "trivy image --exit-code 1 --severity CRITICAL ${IMAGE_NAME}"
                 }
             }
