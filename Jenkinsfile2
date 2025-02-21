@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "abakhar217/abakhar0:trivy-test-${BUILD_NUMBER}"
+        IMAGE_NAME = "abakhar217/trivy:trivy-test-${BUILD_NUMBER}"
         MYSQL_DEPLOYMENT = 'trivy-test-deployment'
         BANKAPP_DEPLOYMENT = 'trivy-test-deployment'
     }
@@ -33,10 +33,10 @@ pipeline {
             steps {
                 script {
                     // Install Trivy if not already installed
-                    sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh'
+                    bat 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh'
 
                     // Scan Docker image for vulnerabilities (failing build if CRITICAL issues exist)
-                    sh "trivy image --exit-code 1 --severity CRITICAL ${IMAGE_NAME}"
+                    bat "trivy image --exit-code 1 --severity CRITICAL ${IMAGE_NAME}"
                 }
             }
         }
